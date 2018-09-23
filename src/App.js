@@ -23,16 +23,19 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
-  handleStatusChange(e) {
-    const value = e.target.value;
+  handleStatusChange() {
     let filtered = [...this.state.todos];
-    if (value === 'all')
+
+    filtered = filtered.filter(todo => todo.title.match(this.refs.query.value));
+
+    if (this.refs.status.value === 'all')
       filtered = filtered;
-    if (value === 'completed')
+    if (this.refs.status.value === 'completed')
       filtered = filtered.filter(todo => todo.completed)
-    if (value === 'incomplete')
+    if (this.refs.status.value === 'incomplete')
       filtered = filtered.filter(todo => !todo.completed)
 
+    // console.log(this.refs.status.value, this.refs.query.value)
     this.setState({ filtered });
   }
 
@@ -50,8 +53,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="controls">
-          <input type="text" name="query" value="" ref={(input) => this.query = input} />
-          <select name="status" ref={(input) => this.status = input} onChange={e => this.handleStatusChange(e)}>
+          <input type="text" name="query" ref="query" onChange={this.handleStatusChange} />
+          <select name="status" ref="status" onChange={this.handleStatusChange}>
             <option value="all">All</option>
             <option value="completed">Completed</option>
             <option value="incomplete">Incomplete</option>
