@@ -28,14 +28,11 @@ class App extends Component {
 
     filtered = filtered.filter(todo => todo.title.match(this.refs.query.value));
 
-    if (this.refs.status.value === 'all')
-      filtered = filtered;
     if (this.refs.status.value === 'completed')
       filtered = filtered.filter(todo => todo.completed)
     if (this.refs.status.value === 'incomplete')
       filtered = filtered.filter(todo => !todo.completed)
 
-    // console.log(this.refs.status.value, this.refs.query.value)
     this.setState({ filtered });
   }
 
